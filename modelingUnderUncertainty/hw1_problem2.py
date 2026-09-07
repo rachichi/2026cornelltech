@@ -19,15 +19,11 @@ def C(N, m):
     # recursive cases
     without_Sm = C(N, m[0 : num_coins-1])   # do the withouts first (exclude largest denomination entirely but not change target N unchanged). this will run until base case is reached.
     with_Sm    = C(N - largest, m)          # use one coin of the largest denomination, still allowed to use it again, so m unchanged
-    
-    #IGNORE: hard coded for question (c) and (d)
-    #if (N == 967) and (len(m) == 4):
-    #    print(f"C({N}, {m}), {without_Sm} / {without_Sm + with_Sm}")
 
     return without_Sm + with_Sm
 
 #test cases 
-print (C(10, [1,5,10]))
+print (C(10, [1,5,10])) 
 # 1. C(10,[1,5,10])
 #   -> without_Sm[1] = C(10, [1,5]) = without_Sm[2] + with_Sm[2] = 3
 #   2. C(10, [1,5])
@@ -59,16 +55,30 @@ print(C(213, [1,5,10,25]))
 ### 1670 ways 
 
 ## (c) - 5 points
-# C(213, [1,5,10,25])
+###create wrapper function that only calls it once
+def C_firstround(N, m):
+    num_coins = len(m)
+    largest = m[num_coins - 1]
+    without_Sm = C(N, m[0 : num_coins-1])
+    with_Sm    = C(N - largest, m)
+    return without_Sm, with_Sm, without_Sm / (without_Sm + with_Sm)
+
+print(C_firstround(213, [1,5,10,25]))
 #   -> without_Sm = C(213, [1,5,10]) = 484
 #   -> with_Sm = C(213, [1,5,10,25]) = 1186
-# So 484/1670 or 242/835
+# 0.2898203592814371
 
 ## (d) -
-x = [25,    58,     209,      213,        391,       967]
-y = [12/13, 42/60,  462/1564, 484 / 1670, 1600/9348, 9506 / 128370]
+x_val = list()
+y_val = list()
+for i in range (25, 500, 3):
+    x_val.append(i)
+    y_val.append(C_firstround(i,[1,5,10,25])[2])
 
-plt.scatter(x, y)
+# print (x_val)
+# print(y_val)
+
+plt.scatter(x_val, y_val)
 plt.xlabel("N")
 plt.ylabel("Fraction of Counts Using Only [1,5,10]")
 plt.show()
