@@ -1,3 +1,4 @@
+
 """
 Single-server queueing simulation (M/M/1 style).
 
