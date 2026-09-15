@@ -4,40 +4,6 @@
 # • average amount of time that a customer spends in the system over the first 100 minutes.
 # The interarrival times for the customers are exponentially distributed with mean 0.5 minutes. The service times at the first server are exponentially distributed with mean 0.8 minutes and the service times at the second server are exponentially distributed with mean 0.9 minutes. We assume that the queue can accommodate infinite number of customers and the system starts empty. Write a computer program that simulates the two-server queueing system with the probability distributions given above. Turn in your (commented) computer program. Make sure that your computer program computes the statistics of interest. Run your computer program and report the statistics of interest. You may want to check the posted solution of the previous homework to see how one could define the state variable and events in a two-server queueing system. It is perfectly fine if you fully follow the pseudo-code given in the solutions of the previous homework assignment queue.
 
-# Pseudocode from HW1
-# Say we are time t and arrival event AE occurs
-#     N++
-#     Sample interarrival time IA
-#     Schedule arrival event AE at time t+IA
-#     If (N==1) or (S1==0) then
-#         Sample service time for server 1, ST1
-#         Schedule departure event D1 at time t+ST1
-#         S1 = 1
-#     Else (S2==0) then
-#         Sample service time for server 2, ST2
-#         Schedule departure event D2 at time t+ST2
-#         S2 = 1
-#     End if   
-
-# Say we are at time t and departure event D1 occurs
-#     N--
-#     S1 = 0
-#     If (N>1) then 
-#         S1 = 1
-#         Sample service time for server 1, ST1
-#         Schedule departure event D1 at time t+ST1
-#     End if
-
-# Say we are at time t and departure event D2 occurs
-#     N--
-#     S2 = 0
-#     If (N>1) then
-#         S2 = 1 
-#         Sample service time for server 2, ST2
-#         Schedule departure event D2 at time t + ST2
-#     End if
-
-# Sampling from the distributions
 def interArrTime():
     return t + IA
 

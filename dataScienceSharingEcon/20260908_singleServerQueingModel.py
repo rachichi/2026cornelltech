@@ -13,8 +13,6 @@ under the occupancy curve: integral of N(t) dt / number of arrivals,
 where N(t) is how many people are in the system at time t.
 """
 
-from typing import Any
-
 import random
 import sys
 
@@ -62,7 +60,7 @@ def deleteEvent(index):
 def findEarliestEvent():
     """Return the index of the event with the smallest clock time."""
     global fel
-    earliestTime = 1e30  # sentinel: larger than any realistic event time
+    earliestTime = 1e30 
     earliestIndex = -1
     for i in range(len(fel)):
         event = fel[i]
@@ -97,7 +95,7 @@ def handleArrival(eventTime):
         # Server was idle; this arrival begins service now
         st = generateService()
         addEvent("d", eventTime + st)
-        time = eventTime  # NOTE: clock is only updated in this branch
+    time = eventTime # time is updated to the eventTime 
 
 
 def handleDeparture(eventTime):
@@ -111,7 +109,7 @@ def handleDeparture(eventTime):
         # Queue was not empty; server takes the next customer immediately
         st = generateService()
         addEvent("d", eventTime + st)
-        time = eventTime  # NOTE: clock is only updated when someone remains
+    time = eventTime  # time is updated to the eventTime
 
 
 def handleEnd(eventTime):
@@ -129,7 +127,7 @@ def handleEnd(eventTime):
 
 fel = list()
 meanInterarrival = 5  # E[interarrival] = 5 => arrival rate λ = 1/5
-meanService = 4       # E[service] = 4 => service rate μ = 1/4 (traffic intensity ρ = 0.8)
+meanService = 1       # E[service] = 4 => service rate μ = 1/4 (traffic intensity ρ = 0.8). Closer these are is the longer each person would be in the system. 
 time = 0              # simulation clock (last event time used for the integral)
 inSystem = 0          # N(t): number of customers in queue + in service
 noArrivals = 0        # count of arrival events processed
@@ -162,6 +160,5 @@ while eventType != "e":
     deleteEvent(earliestIndex)
 
 # totalTimeSpent / noArrivals ≈ average time a customer spends in the system
-# (Little's-law style estimator using the area under N(t))
 print("no arrivals " + str(noArrivals))
 print("avg time in system " + str(totalTimeSpent / noArrivals))
